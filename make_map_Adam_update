@@ -9,7 +9,7 @@ void replay(vector<vector<int>> map){
 	for(unsigned int i=0; i<map.size(); i++){
 		cout << "Room " << i+1 << " is connected with: ";
 		for(unsigned int j=0; j<map[i].size(); j++){
-			cout << map[i][j]+1 << ", ";
+			cout << map[i][j] << ", ";
 		}
 		cout << "\n";
 	}
@@ -56,6 +56,9 @@ vector<vector<int>> make_map(int room_amount){
 					break;
 				}
 			}
+		}
+		for(unsigned int k = 0; k < map[i].size(); k++){
+			map[i][k]++;
 		}
 	}
 	replay(map);

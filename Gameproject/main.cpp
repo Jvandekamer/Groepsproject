@@ -4,7 +4,6 @@
 #include <time.h>
 #include <fstream>
 #include <string>
-#include <ctype.h>
 using namespace std;
 
 void replay(vector<vector<int>> map){
@@ -19,7 +18,7 @@ void replay(vector<vector<int>> map){
 	cout << "\n";
 }
 
-string game_Info(string logo_txt, string info_txt){
+void game_Info(string logo_txt, string info_txt){
     string line;
     ifstream logo_file (logo_txt);
     if(logo_file.is_open()){
@@ -161,7 +160,7 @@ vector<vector<int>>Gamemode(){
 	return Dev_map();
 }
 int main(){
-	cout << game_Info("ASCII_Logo_Art.txt", "Game_Info.txt");
+	game_Info("ASCII_Logo_Art.txt", "Game_Info.txt");
 	bool Nogmaalsspelen = true;
 	while(Nogmaalsspelen==true){ // hier word het spel gestart
 		int Playerlocation = 1; //hier word de speler in het spel geplaatst

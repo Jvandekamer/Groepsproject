@@ -1,4 +1,4 @@
 # Groepsproject B5
-Dit is de Github voor het groeps project TI "Hunt The Wumpus".
+Dit is de branch waar de files voor sprint 0 op staan.
 
 Bijdragen door: Jeff, Adam, Johny en Mark.

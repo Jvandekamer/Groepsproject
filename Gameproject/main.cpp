@@ -59,7 +59,7 @@ void game_Info(string logo_txt, string info_txt){
 }
 
 void Beweeg_speler(int & Playerlocation,vector<vector<int>> Map){
-	int wumpus = 1;
+	int wumpus = 8; // dit is de kamer waar de wumpus zich bevind.
 	while(true){
 		cout << "U are currently in room: " << Playerlocation << endl;
 		cout << "Connected rooms are: ";
@@ -68,9 +68,9 @@ void Beweeg_speler(int & Playerlocation,vector<vector<int>> Map){
 		}
 		cout << endl;
 		cout << "What room would u like to go to? " << endl;
-		int tmp = Playerlocation;
+		int tmp = Playerlocation; //tijdelijke variable om de vorige positie te bewaren
 		cin >> Playerlocation;
-		while(true){
+		while(true){ //hier gebruik ik de tijdelijke variable om te checken of de kamer die je invult wel  te bereiken is vanaf die positie
 			if(Playerlocation ==Map[tmp-1][0]){
 				break;
 			}
@@ -80,13 +80,13 @@ void Beweeg_speler(int & Playerlocation,vector<vector<int>> Map){
 			if(Playerlocation ==Map[tmp-1][2]){
 				break;
 			}
-			cout << "That room cannot be reached from my current position" << endl;
-			cout << "What room would u like to go to? " << endl;
+			cout << "That room cannot be reached from my current position" << endl; // als de ingegeven kamer niet overeen kwam met een van de mogelijkheden dan print hij deze melding
+			cout << "What room would u like to go to? " << endl; //en vraagt hij op nieuw om een locatie
 			cin >> Playerlocation;
 		}
-		if(Playerlocation == wumpus){
-			cout << "U where killed by the Wumpus, well played" << endl;
-			break;
+		if(Playerlocation == wumpus){ // dit is op dit moment nog de enige eindconditie, omdat je op dit moment nog niet de wumpus kunt doden
+			cout << "U where killed by the Wumpus, well played" << endl; //print een melding om te laten weten dat je hebt verloren
+			break; // breekt de loop en stopt het bewegings aspect van het spel
 		}
 		
 	}
@@ -144,30 +144,29 @@ vector<vector<int>> make_map(int room_amount){
 }
 
 
-vector<vector<int>> Dev_map(){ //Dit is de functie die er voor zorgt dat de gebruiker zijn eigen map kan spelen
+vector<vector<int>> Dev_map(){ //Dit is de functie die er voor zorgt dat de gebruiker zijn eigen map kan spelen later worden hier nog extra dingen aan toegevoegd zoals de wumpus locatie en andere onderdelen die je tegen kunt komen in het spel
 	vector<vector<int>> Map = {{2,4,8},{1,3,7},{2,4,6},{1,3,5},{4,6,8},{3,5,7},{2,6,8},{1,5,7}}; // dit is de map, Het kamer nummer is de index van de vector -1 dus de eerste vector in de vector is kamer 1
- 	srand(time(NULL));
 	return Map;
 }
 
-vector<vector<int>>Gamemode(){
+vector<vector<int>>Gamemode(){ // Deze functie vraagt de gebruiker in welke mode hij/zij wil spelen en zorgt ervoor dat de bijbehorende map word geladen
 	int gamemode;
 	cout << "Enter 1 for normal mode, or enter 2 for developer mode" << endl;
 	cin >> gamemode;
 	if(gamemode == 1){
-		return make_map(8);
+		return make_map(8); // hier roept hij de random map aan
 	}
-	return Dev_map();
+	return Dev_map(); // hier roept hij de developer map aan
 }
 int main(){
-	game_Info("ASCII_Logo_Art.txt", "Game_Info.txt");
-	bool Nogmaalsspelen = true;
+	game_Info("ASCII_Logo_Art.txt", "Game_Info.txt"); //print het startscherm en vraagt of je instructies wil
+	bool Nogmaalsspelen = true; //begint de loop waarin je meerdere rondes van het spel kan spelen
 	while(Nogmaalsspelen==true){ // hier word het spel gestart
 		int Playerlocation = 1; //hier word de speler in het spel geplaatst
 		vector<vector<int>> Map = Gamemode();
 		Beweeg_speler(Playerlocation,Map);
-		cout << "Would u like to try again?" << endl;
-		cin >> Nogmaalsspelen;
+		cout << "Would u like to try again?" << endl; // vraagt of je nogmaals wil spelen
+		cin >> Nogmaalsspelen; // 1 betekend nog een ronde spelen, 0 zorgt ervoor dat je het spel afsluit
 	}
 }
 

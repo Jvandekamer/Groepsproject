@@ -19,6 +19,36 @@ void replay(vector<vector<int>> map){
 	cout << "\n";
 }
 
+void get_entities(int & wumpus, vector<int> & bats, vector<int> & pits ){
+	vector<int> full_rooms;
+	int entity_amount;
+	srand((unsigned) time(0));
+	wumpus = (rand() % 19 + 2);
+	full_rooms.push_back(wumpus);
+	
+	while(entity_amount < 4){
+		bool tempvalue = true;
+		int temp = (rand() % 19 + 2);
+		for(unsigned int i = 0; i < full_rooms.size(); i++){
+			if(full_rooms[i] == temp){
+				tempvalue = false;
+				break;
+			}
+		}
+		if(tempvalue && entity_amount < 2){
+			bats.push_back(temp);
+			full_rooms.push_back(temp);
+			entity_amount++;
+		}
+		else if(tempvalue){
+			pits.push_back(temp);
+			full_rooms.push_back(temp);
+			entity_amount++;
+		}
+	}
+	
+}
+
 
 void game_Info(string logo_txt, string info_txt){
     string line;
@@ -229,63 +259,8 @@ vector<vector<int>> get_empty_map(int room_amount){
 }
 
 
-int read_wumpus_file() { 
-    string line; 
-    ifstream myfile ("map.txt"); 
-    if (myfile.is_open()){ 
-        while ( getline (myfile, line) ){
-            stringstream ss; 
-            ss << line; 
-            string temp; 
-            int found; 
-            if (line.find("wumpus") != std::string::npos) {
-                while (!ss.eof()) { 
-                    ss >> temp;
-                    if (stringstream(temp) >> found){
-                        myfile.close();
-                        return found;
-                    }
-                }
-            }
-        }
-    }
-    else{ 
-        cout << "Unable to open file";
-    }
-}
-
-
-vector<int> read_bats_file () { 
-    vector<int> bats;
-    string line; 
-    ifstream myfile ("map.txt"); 
-    if (myfile.is_open()){ 
-        while ( getline (myfile, line) ){
-            stringstream ss; 
-            ss << line; 
-            string temp; 
-            int found; 
-            if (line.find("bats") != std::string::npos) {
-                while (!ss.eof()) { 
-                    ss >> temp;
-                    if (stringstream(temp) >> found){
-                        bats.push_back(found);
-                    }
-                    temp = "";
-                }
-                myfile.close(); 
-                return bats;
-            }
-        }
-    }
-    else{ 
-        cout << "Unable to open file";
-    } 
-}
-
-
-vector<vector<int>> read_map_file () { 
-    vector<vector<int>> map = get_empty_map(20);
+void read_config_file (vector<vector<int>> & map, int & wumpus, vector<int> & bats, vector<int> & pits) { 
+	map = get_empty_map(20);
     string line; 
     ifstream myfile ("map.txt"); 
     int index = 0;
@@ -295,23 +270,49 @@ vector<vector<int>> read_map_file () {
             ss << line; 
             string temp; 
             int found;
-            if (line.find("room") != std::string::npos) {
-                while (!ss.eof()) { 
-                    ss >> temp;
-                    if (stringstream(temp) >> found && found != index+1){
-                        map[index].push_back(found);
-                    }
-                    temp = "";
-                }
-                index++;
-            }
+			if (line.find("room") != string::npos) {
+				while (!ss.eof()) { 
+					ss >> temp;
+					if (stringstream(temp) >> found && found != index+1){
+						map[index].push_back(found);
+					}
+					temp = "";
+				}
+				index++;
+			}
+			else if (line.find("wumpus") != string::npos) {
+				while (!ss.eof()) { 
+					ss >> temp;
+					if (stringstream(temp) >> found){
+						wumpus = found;
+						break;
+					}
+				}
+			}
+			else if (line.find("pits") != string::npos) {
+				while (!ss.eof()) { 
+					ss >> temp;
+					if (stringstream(temp) >> found){
+						pits.push_back(found);
+					}
+					temp = "";
+				}
+			}
+			else if (line.find("bats") != string::npos) {
+				while (!ss.eof()) { 
+					ss >> temp;
+					if (stringstream(temp) >> found){
+						bats.push_back(found);
+					}
+					temp = "";
+				}
+			}
         }
         myfile.close(); 
     }
     else{ 
         cout << "Unable to open file";
     } 
-    return map;
 }
 
 
@@ -357,101 +358,66 @@ vector<vector<int>> make_map(int room_amount){
 }
 
 
-vector<int> read_pits_file () { 
-    vector<int> pits;
-    string line; 
-    ifstream myfile ("map.txt"); 
-    if (myfile.is_open()){ 
-        while ( getline (myfile, line) ){
-            stringstream ss; 
-            ss << line; 
-            string temp; 
-            int found; 
-            if (line.find("pits") != std::string::npos) {
-                while (!ss.eof()) { 
-                    ss >> temp;
-                    if (stringstream(temp) >> found){
-                        pits.push_back(found);
-                    }
-                    temp = "";
-                }
-                myfile.close(); 
-                return pits;
-            }
-        }
-    }
-    else{ 
-        cout << "Unable to open file";
-    } 
-}
-
-
 vector<vector<int>> Dev_map(){ //Dit is de functie die er voor zorgt dat de gebruiker zijn eigen map kan spelen later worden hier nog extra dingen aan toegevoegd zoals de wumpus locatie en andere onderdelen die je tegen kunt komen in het spel
 	vector<vector<int>> Map = {{2,4,8},{1,3,7},{2,4,6},{1,3,5},{4,6,8},{3,5,7},{2,6,8},{1,5,7}}; // dit is de map, Het kamer nummer is de index van de vector -1 dus de eerste vector in de vector is kamer 1
 	return Map;
 }
 
 
-vector<vector<int>>Gamemode(int & wumpus, vector<int> & Bats){ // Deze functie vraagt de gebruiker in welke mode hij/zij wil spelen en zorgt ervoor dat de bijbehorende map word geladen
+bool Gamemode(){ // Deze functie vraagt de gebruiker in welke mode hij/zij wil spelen en zorgt ervoor dat de bijbehorende map word geladen
 	int gamemode;
 	cout << "Enter 1 for normal mode, or enter 2 for developer mode" << endl;
 	cin >> gamemode;
 	if(gamemode == 1){
-		srand((unsigned) time(0));
-		wumpus = rand() % 19 + 2;
-		return make_map(20); // hier roept hij de random map aan
+		return true;
 	}
-	wumpus = read_wumpus_file();
-	
-	return read_map_file(); // hier roept hij de developer map aan
-	
+	return false;
 }
 
 
-void printRoundInfo(vector<vector<int>> Map, string configuratie_txt){
+void printRoundInfo(vector<vector<int>> map, int wumpus, vector<int> bats, vector<int> pits){
     string answer;
     cout << "Would you like to see the info for this round? (Y/N) " << endl;
     cin >> answer;
     if(answer == "Y" || answer == "y"){
-        replay(Map);
-        vector<vector<string>> map_info;
-        string setting_line;
-        ifstream configuratie (configuratie_txt);
-        if (configuratie.is_open()){
-            int start_index;
-            int room_number;
-            while (getline(configuratie, setting_line)){
-                if (setting_line.find("wumpus") != string::npos){
-                    start_index = setting_line.find("wumpus");
-                    cout << "The wumpus started in room: " << setting_line[start_index+9] << endl;
-                }
-                if (setting_line.find("bats") != string::npos){
-                    start_index = setting_line.find("bats");
-                    cout << "The bats were in the rooms: " << setting_line[start_index+7] << " and " << setting_line[start_index+10] << endl;
-                }
-                if (setting_line.find("pits") != string::npos){
-                    start_index = setting_line.find("pits");
-                    cout << "The pits were in the rooms: " << setting_line[start_index+7] << " and " << setting_line[start_index+10] << endl;
-                }
-            }
-        }
-
+        replay(map);
+		cout << "\nThe wumpus started in room: " << wumpus;
+		cout << "\nThe bats were in the rooms: ";
+		for(unsigned int i=0; i<bats.size(); i++){
+			cout<<bats[i] << ", ";
+		}
+		cout << "\nThe pits were in the rooms: ";
+		for(unsigned int j=0; j<pits.size(); j++){
+			cout<<pits[j] << ", ";
+		}
+		cout << "\n";
     }
 }
 
 
 int main(){
+	bool normalmode;
 	game_Info("ASCII_Logo_Art.txt", "Game_Info.txt"); //print het startscherm en vraagt of je instructies wil
 	bool Nogmaalsspelen = true; //begint de loop waarin je meerdere rondes van het spel kan spelen
-	int wumpus;
-	vector<int>Bats;
-	vector<int>Pits;
 	while(Nogmaalsspelen==true){ // hier word het spel gestart
+		int wumpus;
+		vector<int>Bats;
+		vector<int>Pits;
+		vector<vector<int>> Map;
 		int Playerlocation = 1; //hier word de speler in het spel geplaatst deze is altijd hetzelfde
-		vector<vector<int>> Map = Gamemode(wumpus,Bats); //Hier word bepaald voor welke map er word gekozen
-		make_map_file(Map,wumpus,Bats,Pits);
-		Beweeg_speler(Playerlocation,Map,wumpus,Bats); //Hier word het spel gespeeld, met de map die word bepaald uit de gamemode functie
-		printRoundInfo(Map,"map.txt");
+		
+		normalmode = Gamemode();
+		if(normalmode){
+			Map = make_map(20); //maakt random map
+			get_entities(wumpus, Bats, Pits ); //verandert the variables die worden meegegeven
+			make_map_file(Map,wumpus,Bats,Pits);
+		}
+		else{
+			read_config_file(Map, wumpus, Bats, Pits);
+			cout << wumpus;
+		}
+		Beweeg_speler(Playerlocation,Map,wumpus); //Hier word het spel gespeeld, met de map die word bepaald uit de gamemode functie
+		printRoundInfo(Map, wumpus, Bats, Pits);
 		cout << "Would u like to try again?" << endl; // vraagt of je nogmaals wil spelen
 		cin >> Nogmaalsspelen; // 1 betekend nog een ronde spelen, 0 zorgt ervoor dat je het spel afsluit
 	}

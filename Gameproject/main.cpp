@@ -261,15 +261,15 @@ vector<vector<int>> get_empty_map(int room_amount){
 
 void read_config_file (vector<vector<int>> & map, int & wumpus, vector<int> & bats, vector<int> & pits) { 
 	map = get_empty_map(20);
-    string line; 
-    ifstream myfile ("map.txt"); 
-    int index = 0;
-    if (myfile.is_open()){ 
-        while ( getline (myfile, line) ){
-            stringstream ss; 
-            ss << line; 
-            string temp; 
-            int found;
+	string line; 
+	ifstream myfile ("map.txt"); 
+	int index = 0;
+	if (myfile.is_open()){ 
+		while ( getline (myfile, line) ){
+			stringstream ss; 
+			ss << line; 
+			string temp; 
+			int found;
 			if (line.find("room") != string::npos) {
 				while (!ss.eof()) { 
 					ss >> temp;
@@ -307,12 +307,12 @@ void read_config_file (vector<vector<int>> & map, int & wumpus, vector<int> & ba
 					temp = "";
 				}
 			}
-        }
-        myfile.close(); 
-    }
-    else{ 
-        cout << "Unable to open file";
-    } 
+		}
+		myfile.close();
+	}
+	else{ 
+		cout << "Unable to open file";
+	} 
 }
 
 

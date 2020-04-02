@@ -4,6 +4,6 @@
 -IC:\Users\jvdk_\Documents\GCC\lib\gcc\mingw32\5.1.0\include
 -IC:\Users\jvdk_\Documents\GCC\include
 -IC:\Users\jvdk_\Documents\GCC\lib\gcc\mingw32\5.1.0\include-fixed
--IC:\Users\jvdk_\Documents\Gameproject
+-IC:\Users\jvdk_\Documents\GitHub\Groepsproject\Gameproject
 -target
 i686-pc-windows-gnu

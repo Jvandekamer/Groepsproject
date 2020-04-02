@@ -381,16 +381,16 @@ void printRoundInfo(vector<vector<int>> map, int wumpus, vector<int> bats, vecto
     cin >> answer;
     if(answer == "Y" || answer == "y"){
         replay(map);
-		cout << "\nThe wumpus started in room: " << wumpus;
-		cout << "\nThe bats were in the rooms: ";
-		for(unsigned int i=0; i<bats.size(); i++){
-			cout<<bats[i] << ", ";
-		}
-		cout << "\nThe pits were in the rooms: ";
-		for(unsigned int j=0; j<pits.size(); j++){
-			cout<<pits[j] << ", ";
-		}
-		cout << "\n";
+	cout << "\nThe wumpus started in room: " << wumpus;
+	cout << "\nThe bats were in the rooms: ";
+	for(unsigned int i=0; i<bats.size(); i++){
+		cout<<bats[i] << ", ";
+	}
+	cout << "\nThe pits were in the rooms: ";
+	for(unsigned int j=0; j<pits.size(); j++){
+		cout<<pits[j] << ", ";
+	}
+	cout << "\n";
     }
 }
 

@@ -1,0 +1,62 @@
+Aan deze sprint heb ik Het volgende bijgedragen:
+
+Ik heb de functie geschreven die gebruikt word om de speler te verplaten en het spel te spelen, dat is de volgende functie:
+
+void Beweeg_speler(int & Playerlocation,vector<vector<int>> Map){
+	int wumpus = 1;
+	while(true){
+		cout << "U are currently in room: " << Playerlocation << endl;
+		cout << "Connected rooms are: ";
+		for(int i =0; i < Map[Playerlocation-1].size(); i++){
+			cout << Map[Playerlocation-1][i] << " ";
+		}
+		cout << endl;
+		cout << "What room would u like to go to? " << endl;
+		int tmp = Playerlocation;
+		cin >> Playerlocation;
+		while(true){
+			if(Playerlocation ==Map[tmp-1][0]){
+				break;
+			}
+			if(Playerlocation ==Map[tmp-1][1]){
+				break;
+			}
+			if(Playerlocation ==Map[tmp-1][2]){
+				break;
+			}
+			cout << "That room cannot be reached from my current position" << endl;
+			cout << "What room would u like to go to? " << endl;
+			cin >> Playerlocation;
+		}
+		if(Playerlocation == wumpus){
+			cout << "U where killed by the Wumpus, well played" << endl;
+			break;
+		}
+		
+	}
+}
+ 
+Ook kan je hier in al doodgaan aan de wumpus, maar dit is niet de manier waarop ik dit in de volgende sprints wil houden
+
+
+Ook heb ik een functie gemaakt waarmee je zelf kamers kan verbinden met elkaar aan de hand van een kubus model die mark heeft ingevuld, die ziet er als volgt uit.
+
+vector<vector<int>> Dev_map(){ //Dit is de functie die er voor zorgt dat de gebruiker zijn eigen map kan spelen
+	vector<vector<int>> Map = {{2,4,8},{1,3,7},{2,4,6},{1,3,5},{4,6,8},{3,5,7},{2,6,8},{1,5,7}}; // dit is de map, Het kamer nummer is de index van de vector -1 dus de eerste vector in de vector is kamer 1
+ 	srand(time(NULL));
+	return Map;
+}
+
+verder heb iik ook de functie gemaakt die de speler vraagt of hij of zij wil spelen in developer modus, dus de mode waarop je de developer map kan gebruiken, of dat hij de random map functie aanroept die gemaakt is door Adam:
+
+vector<vector<int>>Gamemode(){
+	int gamemode;
+	cout << "Enter 1 for normal mode, or enter 2 for developer mode" << endl;
+	cin >> gamemode;
+	if(gamemode == 1){
+		return make_map(8);
+	}
+	return Dev_map();
+}
+
+verder heb ik ook een trello bord aangemaakt voor deze sprint, en een github pagina gemaakt om onze code's op te zetten.

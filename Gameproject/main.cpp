@@ -98,7 +98,7 @@ int Checklocation(int Playerlocation,vector<vector<int>>Map,int wumpus,int Bat1,
 		return 2;
 	}
 	else if(Playerlocation == traproom1 || Playerlocation == traproom2){
-		cout << "hij komt hier uit " << endl;
+		cout << "You fell in a trap. " << endl;
 		return 3;
 	}
 	
@@ -112,17 +112,20 @@ int Checklocation(int Playerlocation,vector<vector<int>>Map,int wumpus,int Bat1,
 string checksurrounding(int Playerlocation, vector<vector<int>>Map,int wumpus,int Bat1,int Bat2,int traproom1, int traproom2){
 	string Warning = "";
 	bool wumpdetected = false; // variable die laat zien of de wumpus is gespot
-	bool Batsdetected = false; // variabel dei alat zien of de bats zijn gesport
+	bool Batsdetected = false; // variable die laat zien of de bats zijn gespot
 	bool trapdetected = false; // variable dat laat zien dat er een val in de buurt zit
 	for(int i=0; i < Map[Playerlocation-1].size(); i++){ // hier check je voor de hazzards op 1 kamer afstand
-		if(Map[Playerlocation-1][i]==wumpus){
+		if(Map[Playerlocation-1][i]==wumpus && !wumpusdetected){
 			wumpdetected = true;
+			Warning+="You smell something nearby.\n";
 		}
-		if(Map[Playerlocation-1][i]==Bat1 || Map[Playerlocation-1][i]==Bat2){
+		if((Map[Playerlocation-1][i]==Bat1 || Map[Playerlocation-1][i]==Bat2) && !Batsdetected){
 			Batsdetected = true;
+			Warning+="You can hear squeaks.\n";
 		}
-		if(Map[Playerlocation-1][i]==traproom1 || Map[Playerlocation-1][i] == traproom2){
+		if((Map[Playerlocation-1][i]==traproom1 || Map[Playerlocation-1][i] == traproom2) && !trapdetected){
 			trapdetected = true;
+			Warning+="You feel a draft nearby.\n";
 		}
 		// hier kan je de nieuwe hazzards toevoegen voor detectie
 	}
@@ -140,15 +143,6 @@ string checksurrounding(int Playerlocation, vector<vector<int>>Map,int wumpus,in
 			}
 			// hier kan je de neiuwe hazzards toevoegen voor detecie
 		}
-	}
-	if(wumpdetected){
-		Warning+="You smell something nearby.\n";
-	}
-	if(Batsdetected){
-		Warning+="You can hear squeaks.\n";
-	}
-	if(trapdetected){
-		Warning+="You feel a draft nearby.\n";
 	}
 	return Warning;
 }

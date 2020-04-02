@@ -45,8 +45,7 @@ void get_entities(int & wumpus, vector<int> & bats, vector<int> & pits ){
 			full_rooms.push_back(temp);
 			entity_amount++;
 		}
-	}
-	
+	}	
 }
 
 
@@ -142,13 +141,13 @@ string checksurrounding(int Playerlocation, vector<vector<int>>Map,int wumpus,in
 			// hier kan je de neiuwe hazzards toevoegen voor detecie
 		}
 	}
-	if(wumpdetected == 1){
+	if(wumpdetected){
 		Warning+="You smell something nearby.\n";
 	}
-	if(Batsdetected == 1){
+	if(Batsdetected){
 		Warning+="You can hear squeaks.\n";
 	}
-	if(trapdetected == 1){
+	if(trapdetected){
 		Warning+="You feel a draft nearby.\n";
 	}
 	return Warning;

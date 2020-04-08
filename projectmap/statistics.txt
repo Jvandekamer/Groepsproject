@@ -1,0 +1,7 @@
+Moves: 11
+Bats grabs: 1
+Cause of death: Bottomless pit
+Missed_shots: 2
+Wumpus killed: No
+
+

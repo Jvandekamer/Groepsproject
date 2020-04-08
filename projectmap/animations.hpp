@@ -1,1 +1,0 @@
-void kill_wumpus_ani();

@@ -3,7 +3,11 @@ Dit is de laatste versie van het hunt the wumpus spel:
 In het main.cpp bestand vind u de code van de game.
 verder is er ook nog een animation.cpp dit is een extra source file die word gebruikt om de animaties in op te slaan,
 omdat die vrij veel regels aan tekst gebruiken.
-Ook is is er nog een headerfile met de naam animations.H
+Ook is is er nog een headerfile met de naam animations.h dit is de headerfile die word gebruikt voor codelite.
+Maar voor mensen die niet in codelite werken is er een normale animations.hpp headerfile aanwezig.
+
+Ook hebben we een executable meegevoegd, dit het Hunt_the_wumpus.exe bestand, deze kunnen windows gebruikers gebruiken om het spel
+gemakkelijk op te starten.
 
 Verder staat er in de code zelf bijna overal gemarkeerd door wie een functie is geschreven,
 alleen bij de Robot_action functie staat dit er nog niet bij, maar die is gemaakt door Adam en Jeff.
@@ -16,7 +20,7 @@ gamemode keuze toegevoegd, en samen met Jeff de AI ontworpen en geprogrameerd.
 Jeff: tekstanimaties toegevoegd en kleur aan het spel gegeven, omgevings detectie rond de speler gemaakt, opzet van de hazzards gemaakt,
 schietfunctionaliteit toegevoegd en met Adam de ai ontworpen en geprogrameerd.
 
-Mark: Animaties voor de eindcondities gemaakt, Logo ontworpen, spel instructies gemaakt, en met adam de ronde informatie functie gemaakt.
+Mark: Animaties voor de eindcondities gemaakt, Logo ontworpen en in de game verwerkt, spel instructies gemaakt en in de game verwerkt, en met adam de ronde informatie functie gemaakt.
 
 Johny: Ervoor gezorgd dat er word gevraagd of je opnieuw wil spelen ( en dat je dus meerdere rondes kan spelen), vleermuizen toegevoegd
 aan de detectie, hintkamer ontworpen en geprogrameerd(en ervoor gezorgd dat hij random is).

@@ -25,5 +25,7 @@ Mark: Animaties voor de eindcondities gemaakt, Logo ontworpen en in de game verw
 Johny: Ervoor gezorgd dat er word gevraagd of je opnieuw wil spelen ( en dat je dus meerdere rondes kan spelen), vleermuizen toegevoegd
 aan de detectie, hintkamer ontworpen en geprogrameerd(en ervoor gezorgd dat hij random is).
 
+Verder hebben we onderling natuurlijk elkaar geholpen met kleine onderdelen of vragen.
+
 Verder zijn voor dit project Mark, Johny en Jeff scrummaster geweest, dit betekend dat zij het scrumbord bijhielden, meetings plande,
 en de bijbehorende documentatie voor hun sprint deden.

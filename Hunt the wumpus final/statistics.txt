@@ -1,0 +1,26 @@
+Moves: 6
+Bats grabs: 0
+Cause of death: Bottomless pit
+Missed_shots: 0
+Wumpus killed: No
+
+
+Moves: 8
+Bats grabs: 1
+Cause of death: Bottomless pit
+Missed_shots: 0
+Wumpus killed: No
+
+
+Moves: 4
+Bats grabs: 0
+Cause of death: Wumpus
+Missed_shots: 0
+Wumpus killed: No
+
+
+Moves: 18
+Bats grabs: 0
+Cause of death: 
+Missed_shots: 0
+Wumpus killed: Yes

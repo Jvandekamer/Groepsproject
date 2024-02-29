@@ -95,7 +95,7 @@ void get_entities(int & wumpus, std::vector<int> & bats, std::vector<int> & pits
 
 void setScrollSpeed(){
 	animatetext("At which speed would you like to have the text scroll?\n");
-	animatetext("Slow = 0 | Standard = 1 | Fast = 2");
+	animatetext("Slow = 0 | Standard = 1 | Fast = 2\n");
 	std::string input;
 	std::cin >> input;
 	if(input == "0"){
@@ -125,7 +125,7 @@ void game_Info(std::string logo_txt, std::string info_txt){ // Deze functie is g
     }
     setScrollSpeed();
     std::string user_input;
-    animatetext("WOULD YOU LIKE TO SEE THE INSTRUCTIONS? (Y/N) ");
+    animatetext("\nWOULD YOU LIKE TO SEE THE INSTRUCTIONS? (Y/N) ");
     std::cin >> user_input;
     while(user_input != "Y" && user_input != "y" && user_input != "N" && user_input != "n"){
         animatetext("WOULD YOU LIKE TO SEE THE INSTRUCTIONS? (Y/N) ");

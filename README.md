@@ -1,4 +1,4 @@
-![Hunt The Wumpus](Images/logo.jpg)
+![Hunt The Wumpus](images/logo.jpg)
 # The project
 This group project was made around the end of the 1st year of TI at HU.
 It involved recreating the game "Hunt The Wumpus" in the terminal.

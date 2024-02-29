@@ -10,7 +10,7 @@
 #include <chrono>
 #include <thread>
 
-uint8_t scroll_speed = 18;
+uint16_t scroll_speed = 17;
 
 void animatetext(std::string text){ // Deze functie gebruik ik om de tekst op een leuke manier op het scherm te zetten // deze functie is gemaakt door Jeff
 	for(unsigned int i = 0;i < text.length();i++){
@@ -99,13 +99,13 @@ void setScrollSpeed(){
 	std::string input;
 	std::cin >> input;
 	if(input == "0"){
-		scroll_speed = 25;
+		scroll_speed = 80;
 	}
 	else if(input == "1"){
-		scroll_speed = 18;
+		scroll_speed = 17;
 	}
 	else if(input == "2"){
-		scroll_speed = 10;
+		scroll_speed = 8;
 	}
 	return;
 }
@@ -685,10 +685,9 @@ void printRoundInfo(std::vector<std::vector<int>> map, int wumpus, std::vector<i
     }
 }
 
-
-
 int main(){ // deze code bevat onderdelen van iedereen omdat dit de "Hoofdfunctie is"
 	system("color 0a");
+	system("title Hunt the Wumpus");
 	bool aiwin = false;
 	srand(time(NULL));
 	int wumpusgevonden = -1; // zolang hij hem niet heeft gevonden, blijft dit -1 als hij de wumpus heeft gevonden word deze hier bewaard zodat de jacht kan beginnen

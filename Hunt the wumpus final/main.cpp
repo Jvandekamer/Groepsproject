@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "animations.h"
+#include "animations.hpp"
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>

@@ -1,0 +1,4 @@
+*.exe
+map.txt
+statistics.txt
+.vscode

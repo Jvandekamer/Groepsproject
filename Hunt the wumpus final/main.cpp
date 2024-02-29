@@ -196,7 +196,7 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 	int traproom2 = pits[1];
 	int roomtoshootat; // deze bewaard de kamer waar de speler naar toe schiet
 	
-	int moves = 0; // dit Is toegevoegd door adam voor statistieken
+	int moves = 0; // dit is toegevoegd door adam voor statistieken
 	int batgrabs = 0;
 	string cause_of_death; 
 	int missed_shots = 0; 
@@ -215,7 +215,7 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 			this_thread::sleep_for(chrono::milliseconds(20));
 		}
 		cout << endl;
-		animatetext("Would u like to move or shoot? Enter M to move or S to shoot.\n");
+		animatetext("Would you like to move or shoot? Enter M to move or S to shoot.\n");
 		cin >> choice; // Hier laten we de speler de keuze maken of hij/zij wil bewegen of schieten
 		while(!(choice == "M") && !(choice == "m") && !(choice == "s") && !(choice == "S")){
 			animatetext("Invalid decision, please enter M to move or S to shoot.\n");
@@ -223,7 +223,7 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 		} 
 		if(choice == "M" || choice == "m"){
 			cout << endl;
-			animatetext("What room would u like to go to?\n");
+			animatetext("Which room would you like to go to?\n");
 			int tmp = Playerlocation; //tijdelijke variable om de vorige positie te bewaren
 			cin >> Playerlocation;
 			while(true){ //hier gebruik ik de tijdelijke variable om te checken of de kamer die je invult wel  te bereiken is vanaf die positie
@@ -236,7 +236,7 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 				if(Playerlocation ==Map[tmp-1][2]){
 					break;
 				}
-				animatetext("That room cannot be reached from my current position.\nWhat room would you like to go to?\n");
+				animatetext("That room cannot be reached from my current position.\nWhich room would you like to go to?\n");
 				cin >> Playerlocation;
 			}
 			moves++;
@@ -247,25 +247,25 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 				cause_of_death = "Wumpus";
 				make_statistic_file(moves, batgrabs, cause_of_death, missed_shots, wumpus_killed, normalmode);
 				wumpus_eat_ani();
-				animatetext("You where killed by the wumpus.\nGAME OVER\n");
+				animatetext("You were killed by the wumpus.\nGAME OVER\n");
 				break; // deze breekt de loop en stopt dus het spel
 			}
 			else if(inhoud_huidige_kamer ==2){ // dit is wat er gebeurt als je in een bat kamer komt // dit onderdeel is gemaakt door Johny in samenwerking met Jeff
 				batgrabs++;
-				animatetext("You ran into an angry group of bats.\n");
+				animatetext("You ran into a group of enraged bats.\n");
 				int lastposition = Playerlocation;
 				Playerlocation = rand() % 20 + 1;
 				while(Playerlocation == wumpus || Playerlocation == lastposition){
 					Playerlocation = rand() % 20 + 1;
 				}
-				animatetext(("The angry bats picked you up and moved you to room: " + to_string(Playerlocation)+"\n" + "The angry bats have returned to their room.\n"));
+				animatetext(("The enraged bats picked you up and moved you to room: " + to_string(Playerlocation)+"\n" + "The enraged bats have returned to their room.\n"));
 				cout << endl;
 			} // einde van Batkamer onderdeel
 			else if(inhoud_huidige_kamer ==3){ // Wat er gebeurd als je in een pit kamer komt 
 				cause_of_death = "Bottomless pit";
 				make_statistic_file(moves, batgrabs, cause_of_death, missed_shots, wumpus_killed, normalmode);
 				pitt_fall_ani();
-				animatetext("The room you entered had no floor.\nYou fell down and died.\nGAME OVER.\n");
+				animatetext("The room you entered in had no floor.\nYou fell down and died.\nGAME OVER.\n");
 				break; // breekt de loop en stopt het spel
 			}
 			else{ // als de waarde niet een van de bovenstaande is dan mag de speler verder met spelen
@@ -273,7 +273,7 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 			}
 		}
 		else{ // Dis is waar de speler uit komt in het geval dat hij besluit om te schieten // 
-			animatetext(("You currently have " + to_string(arrowcount) + " arrows left.\nWhat room would u like to shoot at?\n"));
+			animatetext(("You currently have " + to_string(arrowcount) + " arrows left.\nWhich room would you like to shoot at?\n"));
 			cin >> roomtoshootat;
 			while(!((roomtoshootat == Map[Playerlocation-1][0]) || (roomtoshootat == Map[Playerlocation-1][1]) || (roomtoshootat == Map[Playerlocation-1][2]))){
 				animatetext("I cannot shoot at that room from my current position.\n");;
@@ -285,7 +285,7 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 				wumpus_killed = true;
 				make_statistic_file(moves, batgrabs, cause_of_death, missed_shots, wumpus_killed, normalmode);
 				kill_wumpus_ani();
-				animatetext("You killed the wumpus.\nCongradualtions you win!\n");
+				animatetext("You killed the wumpus.\nCongratulations you win!\n");
 				break;
 			}
 			else{
@@ -298,7 +298,7 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 					}
 				}
 				if(possiblelocations.size() > 0){ // als het mogelijk is voor de wumpus om te verplaatsen
-					animatetext("Your shot allerted the wumpus.\nYou hear movement.\n");
+					animatetext("Your shot has allerted the wumpus.\nYou can hear movement.\n");
 					if(possiblelocations.size() == 1){
 						wumpus = possiblelocations[0];
 					}
@@ -311,7 +311,7 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 		}
 		if(arrowcount <=0){
 			empty_arrows_ani();
-			animatetext("You ran out of arrows to kill the wumpus with.\nGAME OVER.\n");
+			animatetext("You ran out of arrows to kill the Wumpus with.\nGAME OVER.\n");
 			cause_of_death = "No arrows left";
 			make_statistic_file(moves, batgrabs, cause_of_death, missed_shots, wumpus_killed, normalmode);
 			break; // kilt de speler
@@ -320,7 +320,7 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 }
 
 
-void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, vector<int>Bats, vector<int>pits, int & arrowcount, bool normalmode, vector<int> & rooms_to_avoid, int & wumpusgevonden, bool & aiwin, vector<int> & inefficient_rooms){ // bijna hetzelfde als de player action functie, maar deze word door de ai bediend.
+void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, vector<int>Bats, vector<int>pits, int & arrowcount, bool normalmode, vector<int> & rooms_to_avoid, int & wumpusgevonden, bool & aiwin, vector<int> & inefficient_rooms){ // bijna hetzelfde als de player action functie, maar deze word door de AI bediend.
 	string choice; // deze string word gebruikt om de keuze vast te leggen die de computer
 	// nu gaan we de vectoren met de bats en pits splitsen zodat we ze wakkelijker kunnen vergelijken met de locatie van de speler
 	int bat1 = Bats[0];
@@ -342,13 +342,13 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 			cout << endl;
 		}
 		animatetext(("You are currently in room: " + to_string(Playerlocation) + "\n"));
-		animatetext("Connected rooms are: ");
+		animatetext("The connected rooms are: ");
 		for(int i =0; i < Map[Playerlocation-1].size(); i++){
 			cout << Map[Playerlocation-1][i] << " ";
 			this_thread::sleep_for(chrono::milliseconds(20));
 		}
 		cout << endl;
-		animatetext("Would u like to move or shoot? Enter M to move or S to shoot.\n"); // hier is een vraag
+		animatetext("Would you like to move or shoot? Enter M to move or S to shoot.\n"); // hier is een vraag
 		
 		if(wumpusgevonden != -1 && (wumpusgevonden == Map[Playerlocation-1][0] || wumpusgevonden == Map[Playerlocation-1][1] || wumpusgevonden == Map[Playerlocation-1][2])){
 			animatetext("S\n"); // deze zorgt ervoor dat de speler kan zien wat de cpu kiest
@@ -360,7 +360,7 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 		}
 		if(choice == "M" || choice == "m"){
 			cout << endl;
-			animatetext("What room would u like to go to?\n");
+			animatetext("Which room would you like to go to?\n");
 			int tmp = Playerlocation; // nu moeten we bepalen wat de AI kiest
 			// eerst kijk ik of er kamers zijn waar ik niet naartoe mag
 			vector<int>roomsicanmoveto = {};
@@ -416,7 +416,7 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 				if(Playerlocation ==Map[tmp-1][2]){
 					break;
 				}
-				animatetext("That room cannot be reached from my current position.\nWhat room would you like to go to?\n");
+				animatetext("That room cannot be reached from my current position.\nWhich room would you like to go to?\n");
 				Playerlocation = Map[Playerlocation-1][rand() % 3];
 				animatetext(to_string(Playerlocation));
 			}
@@ -428,7 +428,7 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 				cause_of_death = "Wumpus";
 				make_statistic_file(moves, batgrabs, cause_of_death, missed_shots, wumpus_killed,normalmode);
 				wumpus_eat_ani();
-				animatetext("You where killed by the wumpus.\nGAME OVER\n");
+				animatetext("You were killed by the wumpus.\nGAME OVER\n");
 				rooms_to_avoid.push_back(Playerlocation); // dit leert de AI dat hij deze kamer niet binnen moet gaan
 				if(arrowcount == 5){
 					wumpusgevonden = Playerlocation; // dit leert de AI wat de wumpuslocatie in het spel is.
@@ -437,14 +437,14 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 			}
 			else if(inhoud_huidige_kamer ==2){ // dit is wat er gebeurt als je in een bat kamer komt // dit onderdeel is gemaakt door Johny in samenwerking met Jeff
 				batgrabs++;
-				animatetext("You ran into an angry group of bats.\n");
+				animatetext("You ran into a group of enraged bats.\n");
 				int lastposition = Playerlocation;
-				rooms_to_avoid.push_back(Playerlocation); // zorgt ervoor dat de ai leerd dat hij niet meer naar deze kamer moet gaan
+				rooms_to_avoid.push_back(Playerlocation); // zorgt ervoor dat de AI leerd dat hij niet meer naar deze kamer moet gaan
 				Playerlocation = rand() % 20 + 1;
 				while(Playerlocation == wumpus || Playerlocation == lastposition){
 					Playerlocation = rand() % 20 + 1;
 				}
-				animatetext(("The angry bats picked you up and moved you to room: " + to_string(Playerlocation)+"\n" + "The angry bats have returned to their room.\n"));
+				animatetext(("The enraged bats picked you up and moved you to room: " + to_string(Playerlocation)+"\n" + "The enraged bats have returned to their room.\n"));
 				cout << endl;
 			} // einde van Batkamer onderdeel
 			else if(inhoud_huidige_kamer ==3){ // Wat er gebeurd als je in een pit kamer komt 
@@ -461,7 +461,7 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 			}
 		}
 		else{ // Dis is waar de speler uit komt in het geval dat hij besluit om te schieten // 
-			animatetext(("You currently have " + to_string(arrowcount) + " arrows left.\nWhat room would u like to shoot at?\n"));
+			animatetext(("You currently have " + to_string(arrowcount) + " arrows left.\nWhich room would you like to shoot at?\n"));
 			animatetext(to_string(wumpusgevonden));
 			roomtoshootat = wumpusgevonden;
 			while(!((roomtoshootat == Map[Playerlocation-1][0]) || (roomtoshootat == Map[Playerlocation-1][1]) || (roomtoshootat == Map[Playerlocation-1][2]))){
@@ -474,7 +474,7 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 				wumpus_killed = true;
 				make_statistic_file(moves, batgrabs, cause_of_death, missed_shots, wumpus_killed, normalmode);
 				kill_wumpus_ani();
-				animatetext("You killed the wumpus.\nCongradualtions you win!\n");
+				animatetext("You killed the wumpus.\nCongratulations you win!\n");
 				aiwin = true;
 				break;
 			}
@@ -488,7 +488,7 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 					}
 				}
 				if(possiblelocations.size() > 0){ // als het mogelijk is voor de wumpus om te verplaatsen
-					animatetext("Your shot allerted the wumpus.\nYou hear movement.\n");
+					animatetext("Your shot has allerted the wumpus.\nYou can hear movement.\n");
 					if(possiblelocations.size() == 1){
 						wumpus = possiblelocations[0];
 					}
@@ -707,7 +707,7 @@ int main(){ // deze code bevat onderdelen van iedereen omdat dit de "Hoofdfuncti
 			read_config_file(Map, wumpus, Bats, Pits);
 		}
 		if(robomode){
-			animatetext("Press 1 to play the game yourself, or press 0 to make an ai solve that level.\n");
+			animatetext("Press 1 to play the game yourself, or press 0 to make an AI solve that level.\n");
 			cin >> robomode;
 		}
 		else{
@@ -740,7 +740,7 @@ int main(){ // deze code bevat onderdelen van iedereen omdat dit de "Hoofdfuncti
 			}
 			else{
 				Nogmaalsspelen = "Y";
-				cout << "Y" << endl << "I will play till I win" << endl;
+				cout << "Y" << endl << "I will play till I win!" << endl;
 			}
 		}
 		else{

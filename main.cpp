@@ -312,7 +312,7 @@ void player_action(int & Playerlocation,std::vector<std::vector<int>>Map,int & w
 					}
 				}
 				if(possiblelocations.size() > 0){ // als het mogelijk is voor de wumpus om te verplaatsen
-					animatetext("Your shot has allerted the wumpus.\nYou can hear movement.\n");
+					animatetext("Your shot has alerted the wumpus.\nYou can hear movement.\n");
 					if(possiblelocations.size() == 1){
 						wumpus = possiblelocations[0];
 					}
@@ -502,7 +502,7 @@ void robot_action(int & Playerlocation, std::vector<std::vector<int>>Map, int & 
 					}
 				}
 				if(possiblelocations.size() > 0){ // als het mogelijk is voor de wumpus om te verplaatsen
-					animatetext("Your shot has allerted the wumpus.\nYou can hear movement.\n");
+					animatetext("Your shot has alerted the wumpus.\nYou can hear movement.\n");
 					if(possiblelocations.size() == 1){
 						wumpus = possiblelocations[0];
 					}

@@ -9,36 +9,34 @@
 #include <string>
 #include <chrono>
 #include <thread>
-using namespace std;
-using namespace std::chrono;
 
 uint8_t scroll_speed = 18;
 
-void animatetext(string text){ // Deze functie gebruik ik om de tekst op een leuke manier op het scherm te zetten // deze functie is gemaakt door Jeff
+void animatetext(std::string text){ // Deze functie gebruik ik om de tekst op een leuke manier op het scherm te zetten // deze functie is gemaakt door Jeff
 	for(unsigned int i = 0;i < text.length();i++){
-		cout << text.at(i);
-		this_thread::sleep_for(chrono::milliseconds(scroll_speed));
+		std::cout << text.at(i);
+		std::this_thread::sleep_for(std::chrono::milliseconds(scroll_speed));
 	}
 }
 
 
 void read_stats_file () { // deze functie is gemaakt door Adam
-	string line; 
-	ifstream myfile("statistics.txt"); 
+	std::string line; 
+	std::ifstream myfile("statistics.txt"); 
 	if (myfile.is_open()){ 
-		while(getline(myfile,line)){
+		while(std::getline(myfile,line)){
 			animatetext(line + "\n");
 		}
 	}
 }
 
-void make_statistic_file(int moves, int batgrabs, string cause_of_death, int missed_shots, bool wumpus_killed, bool normalmode){ // Deze functie is gemaakt door Adam
-	ofstream myfile; 
+void make_statistic_file(int moves, int batgrabs, std::string cause_of_death, int missed_shots, bool wumpus_killed, bool normalmode){ // Deze functie is gemaakt door Adam
+	std::ofstream myfile; 
 	if(normalmode){
 		myfile.open("statistics.txt");
 	}
 	else{
-		myfile.open("statistics.txt", ofstream::app);
+		myfile.open("statistics.txt", std::ofstream::app);
 	}
 	myfile << "Moves: " << moves <<"\n";
     myfile << "Bats grabs: " << batgrabs <<"\n";
@@ -54,22 +52,22 @@ void make_statistic_file(int moves, int batgrabs, string cause_of_death, int mis
 }
 
 
-void replay(vector<vector<int>> & map){ // deze functie is gemaakt door Adam
+void replay(std::vector<std::vector<int>> & map){ // deze functie is gemaakt door Adam
 	// Dit is alleen om de map uit te printen 
 	for(unsigned int i=0; i<map.size(); i++){
 		//cout << "Room " << i+1 << " is connected with: ";
-		animatetext(("Room " + to_string(i+1)+" is connected with: "));
+		animatetext(("Room " + std::to_string(i+1)+" is connected with: "));
 		for(unsigned int j=0; j<map[i].size(); j++){
-			cout << map[i][j] << ", ";
+			std::cout << map[i][j] << ", ";
 		}
-		cout << "\n";
+		std::cout << "\n";
 	}
-	cout << "\n";
+	std::cout << "\n";
 }
 
 
-void get_entities(int & wumpus, vector<int> & bats, vector<int> & pits ){ // deze Functie is gemaakt door Adam
-	vector<int> full_rooms;
+void get_entities(int & wumpus, std::vector<int> & bats, std::vector<int> & pits ){ // deze Functie is gemaakt door Adam
+	std::vector<int> full_rooms;
 	int entity_amount = 0;
 	wumpus = (rand() % 19 + 2);
 	full_rooms.push_back(wumpus);
@@ -98,8 +96,8 @@ void get_entities(int & wumpus, vector<int> & bats, vector<int> & pits ){ // dez
 void setScrollSpeed(){
 	animatetext("At which speed would you like to have the text scroll?\n");
 	animatetext("Slow = 0 | Standard = 1 | Fast = 2");
-	string input;
-	cin >> input;
+	std::string input;
+	std::cin >> input;
 	if(input == "0"){
 		scroll_speed = 25;
 	}
@@ -112,33 +110,33 @@ void setScrollSpeed(){
 	return;
 }
 
-void game_Info(string logo_txt, string info_txt){ // Deze functie is gemaakt door Mark
-    string line;
-    ifstream logo_file (logo_txt);
+void game_Info(std::string logo_txt, std::string info_txt){ // Deze functie is gemaakt door Mark
+    std::string line;
+    std::ifstream logo_file (logo_txt);
     if(logo_file.is_open()){
-        while (getline (logo_file, line)){
-            cout << line << endl;
+        while (std::getline (logo_file, line)){
+            std::cout << line << std::endl;
         }
-        cout << endl;
+        std::cout << std::endl;
         logo_file.close();
     }
     else{
         animatetext("Unable to open logo file \n");
     }
     setScrollSpeed();
-    string user_input;
+    std::string user_input;
     animatetext("WOULD YOU LIKE TO SEE THE INSTRUCTIONS? (Y/N) ");
-    cin >> user_input;
+    std::cin >> user_input;
     while(user_input != "Y" && user_input != "y" && user_input != "N" && user_input != "n"){
         animatetext("WOULD YOU LIKE TO SEE THE INSTRUCTIONS? (Y/N) ");
-        cin >> user_input;
+        std::cin >> user_input;
     }
-    cout << endl;
+    std::cout << std::endl;
     if(user_input == "Y" || user_input == "y"){
-        ifstream info_text (info_txt);
+        std::ifstream info_text (info_txt);
         if(info_text.is_open()){
-            vector<string> info_lines = {};
-            while (getline (info_text, line)){
+            std::vector<std::string> info_lines = {};
+            while (std::getline (info_text, line)){
                 info_lines.push_back(line);
             }
             info_text.close();
@@ -154,7 +152,7 @@ void game_Info(string logo_txt, string info_txt){ // Deze functie is gemaakt doo
 }
 
 
-int Checklocation(int Playerlocation, vector<vector<int>>Map, int wumpus, int Bat1, int Bat2, int traproom1, int traproom2 ){ // Deze functie is gemaakt door Jeff
+int Checklocation(int Playerlocation, std::vector<std::vector<int>>Map, int wumpus, int Bat1, int Bat2, int traproom1, int traproom2 ){ // Deze functie is gemaakt door Jeff
 	if(Playerlocation==wumpus){
 		return 1;
 	}
@@ -171,8 +169,8 @@ int Checklocation(int Playerlocation, vector<vector<int>>Map, int wumpus, int Ba
 }
 
 
-string checksurrounding(int Playerlocation, vector<vector<int>>Map, int wumpus, int Bat1, int Bat2, int traproom1, int traproom2){ // Deze functie is gemaakt door Jeff
-	string Warning = "";
+std::string checksurrounding(int Playerlocation, std::vector<std::vector<int>>Map, int wumpus, int Bat1, int Bat2, int traproom1, int traproom2){ // Deze functie is gemaakt door Jeff
+	std::string Warning = "";
 	bool wumpdetected = false; // variable die laat zien of de wumpus is gespot
 	bool Batsdetected = false; // variabel dei alat zien of de bats zijn gesport
 	bool trapdetected = false; // variable dat laat zien dat er een val in de buurt zit
@@ -203,8 +201,8 @@ string checksurrounding(int Playerlocation, vector<vector<int>>Map, int wumpus, 
 }
 
 
-void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vector<int>bats,vector<int>pits,int & arrowcount,bool normalmode){ // deze functie is gemaakt door Jeff
-	string choice; // deze string word gebruikt om de keuze vast te leggen die de speler elke rond maakt
+void player_action(int & Playerlocation,std::vector<std::vector<int>>Map,int & wumpus,std::vector<int>bats,std::vector<int>pits,int & arrowcount,bool normalmode){ // deze functie is gemaakt door Jeff
+	std::string choice; // deze string word gebruikt om de keuze vast te leggen die de speler elke rond maakt
 	// nu gaan we de vectoren met de bats en pits splitsen zodat we ze wakkelijker kunnen vergelijken met de locatie van de speler
 	int bat1 = bats[0];
 	int bat2 = bats[1];
@@ -214,34 +212,34 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 	
 	int moves = 0; // dit is toegevoegd door adam voor statistieken
 	int batgrabs = 0;
-	string cause_of_death; 
+	std::string cause_of_death; 
 	int missed_shots = 0; 
 	bool wumpus_killed = false; 
 	
 	while(true){// Hier geven we de speler wat extra informatie over wat er zich in de kamers om hem heen bevint
-		string Warning = checksurrounding(Playerlocation,Map,wumpus,bat1,bat2,traproom1,traproom2);
+		std::string Warning = checksurrounding(Playerlocation,Map,wumpus,bat1,bat2,traproom1,traproom2);
 		if(Warning.size() > 0){
 			animatetext(Warning);
-			cout << endl;
+			std::cout << std::endl;
 		}
-		animatetext(("You are currently in room: " + to_string(Playerlocation) + "\n"));
+		animatetext(("You are currently in room: " + std::to_string(Playerlocation) + "\n"));
 		animatetext("Connected rooms are: ");
 		for(int i =0; i < Map[Playerlocation-1].size(); i++){
-			cout << Map[Playerlocation-1][i] << " ";
-			this_thread::sleep_for(chrono::milliseconds(20));
+			std::cout << Map[Playerlocation-1][i] << " ";
+			std::this_thread::sleep_for(std::chrono::milliseconds(20));
 		}
-		cout << endl;
+		std::cout << std::endl;
 		animatetext("Would you like to move or shoot? Enter M to move or S to shoot.\n");
-		cin >> choice; // Hier laten we de speler de keuze maken of hij/zij wil bewegen of schieten
+		std::cin >> choice; // Hier laten we de speler de keuze maken of hij/zij wil bewegen of schieten
 		while(!(choice == "M") && !(choice == "m") && !(choice == "s") && !(choice == "S")){
 			animatetext("Invalid decision, please enter M to move or S to shoot.\n");
-			cin >> choice;
+			std::cin >> choice;
 		} 
 		if(choice == "M" || choice == "m"){
-			cout << endl;
+			std::cout << std::endl;
 			animatetext("Which room would you like to go to?\n");
 			int tmp = Playerlocation; //tijdelijke variable om de vorige positie te bewaren
-			cin >> Playerlocation;
+			std::cin >> Playerlocation;
 			while(true){ //hier gebruik ik de tijdelijke variable om te checken of de kamer die je invult wel  te bereiken is vanaf die positie
 				if(Playerlocation ==Map[tmp-1][0]){
 					break;
@@ -253,10 +251,10 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 					break;
 				}
 				animatetext("That room cannot be reached from my current position.\nWhich room would you like to go to?\n");
-				cin >> Playerlocation;
+				std::cin >> Playerlocation;
 			}
 			moves++;
-			cout << endl;
+			std::cout << std::endl;
 			//vanaf hier gaan we checken wat er in de huidge kamer zit, en wat daarvan het gevolg is
 			int inhoud_huidige_kamer = Checklocation(Playerlocation, Map, wumpus, bat1, bat2, traproom1, traproom2); //geeft nul als de kamer leeg is, geeft 1 als er een wumpus in de kamer zit. Als er nieuwe elenten in het spel komen voeg die hier aan toe met een nieuwe int
 			if(inhoud_huidige_kamer==1){
@@ -274,8 +272,8 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 				while(Playerlocation == wumpus || Playerlocation == lastposition){
 					Playerlocation = rand() % 20 + 1;
 				}
-				animatetext(("The enraged bats picked you up and moved you to room: " + to_string(Playerlocation)+"\n" + "The enraged bats have returned to their room.\n"));
-				cout << endl;
+				animatetext(("The enraged bats picked you up and moved you to room: " + std::to_string(Playerlocation)+"\n" + "The enraged bats have returned to their room.\n"));
+				std::cout << std::endl;
 			} // einde van Batkamer onderdeel
 			else if(inhoud_huidige_kamer ==3){ // Wat er gebeurd als je in een pit kamer komt 
 				cause_of_death = "Bottomless pit";
@@ -289,14 +287,14 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 			}
 		}
 		else{ // Dis is waar de speler uit komt in het geval dat hij besluit om te schieten // 
-			animatetext(("You currently have " + to_string(arrowcount) + " arrows left.\nWhich room would you like to shoot at?\n"));
-			cin >> roomtoshootat;
+			animatetext(("You currently have " + std::to_string(arrowcount) + " arrows left.\nWhich room would you like to shoot at?\n"));
+			std::cin >> roomtoshootat;
 			while(!((roomtoshootat == Map[Playerlocation-1][0]) || (roomtoshootat == Map[Playerlocation-1][1]) || (roomtoshootat == Map[Playerlocation-1][2]))){
 				animatetext("I cannot shoot at that room from my current position.\n");;
-				cin >> roomtoshootat;
+				std::cin >> roomtoshootat;
 			}
 			arrowcount-=1;
-			cout << endl;
+			std::cout << std::endl;
 			if(roomtoshootat == wumpus){
 				wumpus_killed = true;
 				make_statistic_file(moves, batgrabs, cause_of_death, missed_shots, wumpus_killed, normalmode);
@@ -307,7 +305,7 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 			else{
 				missed_shots++;
 				animatetext("Your shot missed.\n");
-				vector<int>possiblelocations={};
+				std::vector<int>possiblelocations={};
 				for(unsigned int i2 = 0; i2 < 3;i2++){
 					if(Map[wumpus-1][i2] != Playerlocation && Map[wumpus-1][i2] != bat1 && Map[wumpus-1][i2] != bat2 && Map[wumpus-1][i2] != traproom1 && Map[wumpus-1][i2] != traproom2 ){
 						possiblelocations.push_back(Map[wumpus-1][i2]);
@@ -336,8 +334,8 @@ void player_action(int & Playerlocation,vector<vector<int>>Map,int & wumpus,vect
 }
 
 
-void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, vector<int>Bats, vector<int>pits, int & arrowcount, bool normalmode, vector<int> & rooms_to_avoid, int & wumpusgevonden, bool & aiwin, vector<int> & inefficient_rooms){ // bijna hetzelfde als de player action functie, maar deze word door de AI bediend.
-	string choice; // deze string word gebruikt om de keuze vast te leggen die de computer
+void robot_action(int & Playerlocation, std::vector<std::vector<int>>Map, int & wumpus, std::vector<int>Bats, std::vector<int>pits, int & arrowcount, bool normalmode, std::vector<int> & rooms_to_avoid, int & wumpusgevonden, bool & aiwin, std::vector<int> & inefficient_rooms){ // bijna hetzelfde als de player action functie, maar deze word door de AI bediend.
+	std::string choice; // deze string word gebruikt om de keuze vast te leggen die de computer
 	// nu gaan we de vectoren met de bats en pits splitsen zodat we ze wakkelijker kunnen vergelijken met de locatie van de speler
 	int bat1 = Bats[0];
 	int bat2 = Bats[1];
@@ -347,23 +345,23 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 	
 	int moves = 0;
 	int batgrabs = 0; 
-	string cause_of_death; 
+	std::string cause_of_death; 
 	int missed_shots = 0; 
 	bool wumpus_killed = false; 
 	
 	while(true){// Hier geven we de speler wat extra informatie over wat er zich in de kamers om hem heen bevint
-		string Warning = checksurrounding(Playerlocation,Map,wumpus,bat1,bat2,traproom1,traproom2);
+		std::string Warning = checksurrounding(Playerlocation,Map,wumpus,bat1,bat2,traproom1,traproom2);
 		if(Warning.size() > 0){
 			animatetext(Warning);
-			cout << endl;
+			std::cout << std::endl;
 		}
-		animatetext(("You are currently in room: " + to_string(Playerlocation) + "\n"));
+		animatetext(("You are currently in room: " + std::to_string(Playerlocation) + "\n"));
 		animatetext("The connected rooms are: ");
 		for(int i =0; i < Map[Playerlocation-1].size(); i++){
-			cout << Map[Playerlocation-1][i] << " ";
-			this_thread::sleep_for(chrono::milliseconds(20));
+			std::cout << Map[Playerlocation-1][i] << " ";
+			std::this_thread::sleep_for(std::chrono::milliseconds(20));
 		}
-		cout << endl;
+		std::cout << std::endl;
 		animatetext("Would you like to move or shoot? Enter M to move or S to shoot.\n"); // hier is een vraag
 		
 		if(wumpusgevonden != -1 && (wumpusgevonden == Map[Playerlocation-1][0] || wumpusgevonden == Map[Playerlocation-1][1] || wumpusgevonden == Map[Playerlocation-1][2])){
@@ -375,12 +373,12 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 			choice = "M";
 		}
 		if(choice == "M" || choice == "m"){
-			cout << endl;
+			std::cout << std::endl;
 			animatetext("Which room would you like to go to?\n");
 			int tmp = Playerlocation; // nu moeten we bepalen wat de AI kiest
 			// eerst kijk ik of er kamers zijn waar ik niet naartoe mag
-			vector<int>roomsicanmoveto = {};
-			vector<int>smartrooms = {};
+			std::vector<int>roomsicanmoveto = {};
+			std::vector<int>smartrooms = {};
 			bool issafe;
 			bool issmart;
 			if(rooms_to_avoid.size() > 0){ // als er kamers zijn waar we niet naartoe mogen gaan we kijken of er een daarvan voor ons zit, en als dat zo is, dan zorgen we ervoor dat hij niet in de vector met roomsicanmoveto komt
@@ -421,7 +419,7 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 			else{ // en als er geen kamers zijn die slim zijn om naar toe te bewegen dan pikken we gewoon een random kamer waar je naar toe kan
 				Playerlocation = roomsicanmoveto[rand() % roomsicanmoveto.size()];
 			}
-			animatetext(to_string(Playerlocation));
+			animatetext(std::to_string(Playerlocation));
 			while(true){ //hier gebruik ik de tijdelijke variable om te checken of de kamer die je invult wel  te bereiken is vanaf die positie
 				if(Playerlocation ==Map[tmp-1][0]){
 					break;
@@ -434,10 +432,10 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 				}
 				animatetext("That room cannot be reached from my current position.\nWhich room would you like to go to?\n");
 				Playerlocation = Map[Playerlocation-1][rand() % 3];
-				animatetext(to_string(Playerlocation));
+				animatetext(std::to_string(Playerlocation));
 			}
 			moves++;
-			cout << endl;
+			std::cout << std::endl;
 			//vanaf hier gaan we checken wat er in de huidge kamer zit, en wat daarvan het gevolg is
 			int inhoud_huidige_kamer = Checklocation(Playerlocation,Map,wumpus,bat1,bat2,traproom1,traproom2); //geeft nul als de kamer leeg is, geeft 1 als er een wumpus in de kamer zit. Als er nieuwe elenten in het spel komen voeg die hier aan toe met een nieuwe int
 			if(inhoud_huidige_kamer==1){
@@ -460,8 +458,8 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 				while(Playerlocation == wumpus || Playerlocation == lastposition){
 					Playerlocation = rand() % 20 + 1;
 				}
-				animatetext(("The enraged bats picked you up and moved you to room: " + to_string(Playerlocation)+"\n" + "The enraged bats have returned to their room.\n"));
-				cout << endl;
+				animatetext(("The enraged bats picked you up and moved you to room: " + std::to_string(Playerlocation)+"\n" + "The enraged bats have returned to their room.\n"));
+				std::cout << std::endl;
 			} // einde van Batkamer onderdeel
 			else if(inhoud_huidige_kamer ==3){ // Wat er gebeurd als je in een pit kamer komt 
 				cause_of_death = "Bottomless pit";
@@ -477,15 +475,15 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 			}
 		}
 		else{ // Dis is waar de speler uit komt in het geval dat hij besluit om te schieten // 
-			animatetext(("You currently have " + to_string(arrowcount) + " arrows left.\nWhich room would you like to shoot at?\n"));
-			animatetext(to_string(wumpusgevonden));
+			animatetext(("You currently have " + std::to_string(arrowcount) + " arrows left.\nWhich room would you like to shoot at?\n"));
+			animatetext(std::to_string(wumpusgevonden));
 			roomtoshootat = wumpusgevonden;
 			while(!((roomtoshootat == Map[Playerlocation-1][0]) || (roomtoshootat == Map[Playerlocation-1][1]) || (roomtoshootat == Map[Playerlocation-1][2]))){
 				animatetext("I cannot shoot at that room from my current position.\n");
 				roomtoshootat = wumpusgevonden;
 			}
 			arrowcount-=1;
-			cout << endl;
+			std::cout << std::endl;
 			if(roomtoshootat == wumpus){
 				wumpus_killed = true;
 				make_statistic_file(moves, batgrabs, cause_of_death, missed_shots, wumpus_killed, normalmode);
@@ -497,7 +495,7 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 			else{
 				missed_shots++;
 				animatetext("Your shot missed.\n");
-				vector<int>possiblelocations={};
+				std::vector<int>possiblelocations={};
 				for(unsigned int i2 = 0; i2 < 3;i2++){
 					if(Map[wumpus-1][i2] != Playerlocation && Map[wumpus-1][i2] != bat1 && Map[wumpus-1][i2] != bat2 && Map[wumpus-1][i2] != traproom1 && Map[wumpus-1][i2] != traproom2 ){
 						possiblelocations.push_back(Map[wumpus-1][i2]);
@@ -526,8 +524,8 @@ void robot_action(int & Playerlocation, vector<vector<int>>Map, int & wumpus, ve
 }
 
 
-void make_map_file (vector<vector<int>> map, int wumpuslocation, vector<int> batslocation, vector<int> pitslocation) { // Gemaakt door adam
-    ofstream myfile; 
+void make_map_file (std::vector<std::vector<int>> map, int wumpuslocation, std::vector<int> batslocation, std::vector<int> pitslocation) { // Gemaakt door adam
+    std::ofstream myfile; 
     myfile.open("map.txt");
     for(unsigned int i=0; i<map.size(); i++){
         myfile << "room " << i+1 << "; ";
@@ -549,9 +547,9 @@ void make_map_file (vector<vector<int>> map, int wumpuslocation, vector<int> bat
 }
 
 
-vector<vector<int>> get_empty_map(int room_amount){ // Gemaakt door Adam
+std::vector<std::vector<int>> get_empty_map(int room_amount){ // Gemaakt door Adam
 	// een een lege map een te maken, room_amount geeft aan hoeveel kamers de map bevat
-	vector<vector<int>> Empty_map = {};
+	std::vector<std::vector<int>> Empty_map = {};
 	for(int i=0; i<room_amount; i++){
 		Empty_map.push_back({});
 	}
@@ -559,49 +557,49 @@ vector<vector<int>> get_empty_map(int room_amount){ // Gemaakt door Adam
 }
 
 
-void read_config_file (vector<vector<int>> & map, int & wumpus, vector<int> & bats, vector<int> & pits) { // gemaakt door adam in samenwerking met Mark
+void read_config_file (std::vector<std::vector<int>> & map, int & wumpus, std::vector<int> & bats, std::vector<int> & pits) { // gemaakt door adam in samenwerking met Mark
 	map = get_empty_map(20);
-	string line; 
-	ifstream myfile ("map.txt"); 
+	std::string line; 
+	std::ifstream myfile ("map.txt"); 
 	int index = 0;
 	if (myfile.is_open()){ 
-		while ( getline (myfile, line) ){
-			stringstream ss; 
+		while ( std::getline (myfile, line) ){
+			std::stringstream ss; 
 			ss << line; 
-			string temp; 
+			std::string temp; 
 			int found;
-			if (line.find("room") != string::npos) {
+			if (line.find("room") != std::string::npos) {
 				while (!ss.eof()) { 
 					ss >> temp;
-					if (stringstream(temp) >> found && found != index+1){
+					if (std::stringstream(temp) >> found && found != index+1){
 						map[index].push_back(found);
 					}
 					temp = "";
 				}
 				index++;
 			}
-			else if (line.find("wumpus") != string::npos) {
+			else if (line.find("wumpus") != std::string::npos) {
 				while (!ss.eof()) { 
 					ss >> temp;
-					if (stringstream(temp) >> found){
+					if (std::stringstream(temp) >> found){
 						wumpus = found;
 						break;
 					}
 				}
 			}
-			else if (line.find("pits") != string::npos) {
+			else if (line.find("pits") != std::string::npos) {
 				while (!ss.eof()) { 
 					ss >> temp;
-					if (stringstream(temp) >> found){
+					if (std::stringstream(temp) >> found){
 						pits.push_back(found);
 					}
 					temp = "";
 				}
 			}
-			else if (line.find("bats") != string::npos) {
+			else if (line.find("bats") != std::string::npos) {
 				while (!ss.eof()) { 
 					ss >> temp;
-					if (stringstream(temp) >> found){
+					if (std::stringstream(temp) >> found){
 						bats.push_back(found);
 					}
 					temp = "";
@@ -616,10 +614,10 @@ void read_config_file (vector<vector<int>> & map, int & wumpus, vector<int> & ba
 }
 
 
-vector<vector<int>> make_map(int room_amount){ // Gemaakt door Adam
+std::vector<std::vector<int>> make_map(int room_amount){ // Gemaakt door Adam
 	// Vult de lege map met voor elke kamer 3 connecties. de output is een nested vector (int).
 	// De plaat in de nested vector geeft aan over welke kamer het gaat. Dus de 0ste vector is kamer 1. 
-	vector<vector<int>> map = get_empty_map(room_amount);
+	std::vector<std::vector<int>> map = get_empty_map(room_amount);
 	int redo;
 	
 	for(size_t i = 0; i < map.size(); i++){
@@ -660,7 +658,7 @@ vector<vector<int>> make_map(int room_amount){ // Gemaakt door Adam
 bool Gamemode(){ // Deze functie vraagt de gebruiker in welke mode hij/zij wil spelen en zorgt ervoor dat de bijbehorende map word geladen // origineel gemaakt door Jeff, bijgewerkt door Adam
 	int gamemode;
 	animatetext("Enter 1 to play a random map, or enter 2 to play the map from the config file.\n");
-	cin >> gamemode;
+	std::cin >> gamemode;
 	if(gamemode == 1){
 		return true;
 	}
@@ -668,22 +666,22 @@ bool Gamemode(){ // Deze functie vraagt de gebruiker in welke mode hij/zij wil s
 }
 
 
-void printRoundInfo(vector<vector<int>> map, int wumpus, vector<int> bats, vector<int> pits){ // Gemaakt door Mark
-    string answer;
+void printRoundInfo(std::vector<std::vector<int>> map, int wumpus, std::vector<int> bats, std::vector<int> pits){ // Gemaakt door Mark
+    std::string answer;
     animatetext("Would you like to see the info for this round? (Y/N).\n");
-    cin >> answer;
+    std::cin >> answer;
     if(answer == "Y" || answer == "y"){
         replay(map);
-	animatetext("\nThe wumpus started in room: " + to_string(wumpus));
+	animatetext("\nThe wumpus started in room: " + std::to_string(wumpus));
 	animatetext("\nThe bats were in the rooms: ");
 	for(unsigned int i=0; i<bats.size(); i++){
-		cout<<bats[i] << ", ";
+		std::cout<<bats[i] << ", ";
 	}
-	cout << "\nThe pits were in the rooms: ";
+	std::cout << "\nThe pits were in the rooms: ";
 	for(unsigned int j=0; j<pits.size(); j++){
-		cout<<pits[j] << ", ";
+		std::cout<<pits[j] << ", ";
 	}
-	cout << "\n";
+	std::cout << "\n";
     }
 }
 
@@ -694,20 +692,20 @@ int main(){ // deze code bevat onderdelen van iedereen omdat dit de "Hoofdfuncti
 	bool aiwin = false;
 	srand(time(NULL));
 	int wumpusgevonden = -1; // zolang hij hem niet heeft gevonden, blijft dit -1 als hij de wumpus heeft gevonden word deze hier bewaard zodat de jacht kan beginnen
-	vector<int>rooms_to_avoid = {};
+	std::vector<int>rooms_to_avoid = {};
 	bool normalmode;
 	bool robomode = true;
-	string showstat = "";
+	std::string showstat = "";
 	game_Info("ASCII_Logo_Art.txt", "Game_Info.txt"); //print het startscherm en vraagt of je instructies wil
-	string Nogmaalsspelen = ""; //begint de loop waarin je meerdere rondes van het spel kan spelen
+	std::string Nogmaalsspelen = ""; //begint de loop waarin je meerdere rondes van het spel kan spelen
 
 	while(!(Nogmaalsspelen=="N") && !(Nogmaalsspelen == "n")){ // hier word het spel gestart
-		vector<int>inefficient_rooms = {1};
+		std::vector<int>inefficient_rooms = {1};
 		int wumpus;
 		int arrowcount =5;
-		vector<int>Bats;
-		vector<int>Pits;
-		vector<vector<int>> Map;
+		std::vector<int>Bats;
+		std::vector<int>Pits;
+		std::vector<std::vector<int>> Map;
 		int Playerlocation = 1; //hier word de speler in het spel geplaatst deze is altijd hetzelfde
 		if(robomode){
 			normalmode = Gamemode();
@@ -725,14 +723,14 @@ int main(){ // deze code bevat onderdelen van iedereen omdat dit de "Hoofdfuncti
 		}
 		if(robomode){
 			animatetext("Press 1 to play the game yourself, or press 0 to make an AI solve that level.\n");
-			cin >> robomode;
+			std::cin >> robomode;
 		}
 		else{
 			robomode = 0;
 		}
 		while(robomode != 1 && robomode !=0){
 			animatetext("Invalid anwser, Please enter 1 to play yourself, or press 2 to make the computer play that level.\n");
-			cin >> robomode;
+			std::cin >> robomode;
 		}
 		if(robomode == 1){
 			player_action(Playerlocation,Map,wumpus,Bats,Pits,arrowcount, normalmode); //Hier word het spel gespeeld, met de map die word bepaald uit de gamemode functie
@@ -742,14 +740,14 @@ int main(){ // deze code bevat onderdelen van iedereen omdat dit de "Hoofdfuncti
 		}
 		printRoundInfo(Map, wumpus, Bats, Pits);
 		animatetext("Would you like to see the statistics (Y/N).\n");
-		cin >> showstat;
+		std::cin >> showstat;
 		if(showstat == "Y" || showstat == "y"){
 			read_stats_file();
 		}
 		animatetext("Would you like to try again Y/N?.\n"); // vraagt of je nogmaals wil spelen
 		if(robomode == 0){
 			if(aiwin == 1){
-				cin >> Nogmaalsspelen;
+				std::cin >> Nogmaalsspelen;
 				robomode = 1;
 				rooms_to_avoid = {};
 				wumpusgevonden = -1;
@@ -757,11 +755,11 @@ int main(){ // deze code bevat onderdelen van iedereen omdat dit de "Hoofdfuncti
 			}
 			else{
 				Nogmaalsspelen = "Y";
-				cout << "Y" << endl << "I will play till I win!" << endl;
+				std::cout << "Y" << std::endl << "I will play till I win!" << std::endl;
 			}
 		}
 		else{
-		cin >> Nogmaalsspelen;
+		std::cin >> Nogmaalsspelen;
 		}
 	}
 }

@@ -12,11 +12,12 @@
 using namespace std;
 using namespace std::chrono;
 
+uint8_t scroll_speed = 18;
 
 void animatetext(string text){ // Deze functie gebruik ik om de tekst op een leuke manier op het scherm te zetten // deze functie is gemaakt door Jeff
 	for(unsigned int i = 0;i < text.length();i++){
 		cout << text.at(i);
-		this_thread::sleep_for(chrono::milliseconds(18));
+		this_thread::sleep_for(chrono::milliseconds(scroll_speed));
 	}
 }
 
@@ -31,7 +32,6 @@ void read_stats_file () { // deze functie is gemaakt door Adam
 	}
 }
 
-
 void make_statistic_file(int moves, int batgrabs, string cause_of_death, int missed_shots, bool wumpus_killed, bool normalmode){ // Deze functie is gemaakt door Adam
 	ofstream myfile; 
 	if(normalmode){
@@ -43,7 +43,7 @@ void make_statistic_file(int moves, int batgrabs, string cause_of_death, int mis
 	myfile << "Moves: " << moves <<"\n";
     myfile << "Bats grabs: " << batgrabs <<"\n";
 	myfile << "Cause of death: " << cause_of_death <<"\n";
-	myfile << "Missed_shots: " << missed_shots <<"\n";
+	myfile << "Missed shots: " << missed_shots <<"\n";
 	if(wumpus_killed){
 		myfile << "Wumpus killed: Yes\n";
 	}
@@ -95,6 +95,22 @@ void get_entities(int & wumpus, vector<int> & bats, vector<int> & pits ){ // dez
 	}
 }
 
+void setScrollSpeed(){
+	animatetext("At which speed would you like to have the text scroll?\n");
+	animatetext("Slow = 0 | Standard = 1 | Fast = 2");
+	string input;
+	cin >> input;
+	if(input == "0"){
+		scroll_speed = 25;
+	}
+	else if(input == "1"){
+		scroll_speed = 18;
+	}
+	else if(input == "2"){
+		scroll_speed = 10;
+	}
+	return;
+}
 
 void game_Info(string logo_txt, string info_txt){ // Deze functie is gemaakt door Mark
     string line;
@@ -109,7 +125,7 @@ void game_Info(string logo_txt, string info_txt){ // Deze functie is gemaakt doo
     else{
         animatetext("Unable to open logo file \n");
     }
-    
+    setScrollSpeed();
     string user_input;
     animatetext("WOULD YOU LIKE TO SEE THE INSTRUCTIONS? (Y/N) ");
     cin >> user_input;
@@ -670,6 +686,7 @@ void printRoundInfo(vector<vector<int>> map, int wumpus, vector<int> bats, vecto
 	cout << "\n";
     }
 }
+
 
 
 int main(){ // deze code bevat onderdelen van iedereen omdat dit de "Hoofdfunctie is"

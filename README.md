@@ -22,5 +22,5 @@ Authors
 
 ![Oh oh the wumpus](images/wumpus.jpg)
 # Getting the game
-A compiled executable can be found at in the folder
-All the source code is available to compile it yourself as well
+A compiled executable can be found in the root folder.
+All the source code is available to compile it yourself as well.

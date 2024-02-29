@@ -334,7 +334,7 @@ void player_action(int & Playerlocation,std::vector<std::vector<int>>Map,int & w
 }
 
 
-void robot_action(int & Playerlocation, std::vector<std::vector<int>>Map, int & wumpus, std::vector<int>Bats, std::vector<int>pits, int & arrowcount, bool normalmode, std::vector<int> & rooms_to_avoid, int & wumpusgevonden, bool & aiwin, std::vector<int> & inefficient_rooms){ // bijna hetzelfde als de player action functie, maar deze word door de AI bediend.
+void robot_action(int & Playerlocation, std::vector<std::vector<int>>Map, int & wumpus, std::vector<int>Bats, std::vector<int>pits, int & arrowcount, bool normalmode, std::vector<int> & rooms_to_avoid, int & wumpusgevonden, bool & aiwin, std::vector<int> & inefficient_rooms){ // bijna hetzelfde als de player action functie, maar deze word door de AI bediend. Gemaakt door Adam en Jeff
 	std::string choice; // deze string word gebruikt om de keuze vast te leggen die de computer
 	// nu gaan we de vectoren met de bats en pits splitsen zodat we ze wakkelijker kunnen vergelijken met de locatie van de speler
 	int bat1 = Bats[0];
